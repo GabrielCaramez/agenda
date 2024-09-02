@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -82,6 +83,7 @@ interface AppointmentRepository extends JpaRepository<Appointment, Long> {}
 
 @RestController
 @RequestMapping("/api/appointments")
+@CrossOrigin(origins = "*") // Permitir CORS para todas as origens
 class AppointmentController {
     @Autowired
     private AppointmentService appointmentService;
@@ -94,6 +96,11 @@ class AppointmentController {
     @PostMapping
     public Appointment createAppointment(@RequestBody Appointment appointment) {
         return appointmentService.saveAppointment(appointment);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteAppointment(@PathVariable Long id) {
+        appointmentService.deleteAppointment(id);
     }
 }
 
@@ -108,5 +115,9 @@ class AppointmentService {
 
     public Appointment saveAppointment(Appointment appointment) {
         return appointmentRepository.save(appointment);
+    }
+
+    public void deleteAppointment(Long id) {
+        appointmentRepository.deleteById(id);
     }
 }

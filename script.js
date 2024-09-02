@@ -7,8 +7,7 @@ document.getElementById('appointmentForm').addEventListener('submit', function(e
     const notes = document.getElementById('notes').value;
 
     const appointment = { name, date, time, notes };
-    addAppointmentToTable(appointment);
-    saveAppointment(appointment);
+    createAppointment(appointment);
 });
 
 function addAppointmentToTable(appointment) {
@@ -29,27 +28,43 @@ function addAppointmentToTable(appointment) {
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Apagar';
     deleteButton.addEventListener('click', function() {
-        deleteAppointment(appointment, newRow);
+        deleteAppointment(appointment.id, newRow);
     });
     actionsCell.appendChild(deleteButton);
 }
 
-function saveAppointment(appointment) {
-    let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
-    appointments.push(appointment);
-    localStorage.setItem('appointments', JSON.stringify(appointments));
+function createAppointment(appointment) {
+    fetch('http://localhost:8080/api/appointments', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(appointment)
+    })
+    .then(response => response.json())
+    .then(data => {
+        addAppointmentToTable(data);
+    })
+    .catch(error => console.error('Erro:', error));
 }
 
-function deleteAppointment(appointment, row) {
-    let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
-    appointments = appointments.filter(a => a.name !== appointment.name || a.date !== appointment.date || a.time !== appointment.time);
-    localStorage.setItem('appointments', JSON.stringify(appointments));
-    row.remove();
+function deleteAppointment(id, row) {
+    fetch(`http://localhost:8080/api/appointments/${id}`, {
+        method: 'DELETE'
+    })
+    .then(() => {
+        row.remove();
+    })
+    .catch(error => console.error('Erro:', error));
 }
 
 function loadAppointments() {
-    const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
-    appointments.forEach(addAppointmentToTable);
+    fetch('http://localhost:8080/api/appointments')
+    .then(response => response.json())
+    .then(data => {
+        data.forEach(addAppointmentToTable);
+    })
+    .catch(error => console.error('Erro:', error));
 }
 
 document.addEventListener('DOMContentLoaded', loadAppointments);
