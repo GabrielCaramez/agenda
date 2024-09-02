@@ -1,0 +1,47 @@
+label {
+    display: block;
+    margin-top: 10px;
+    color: #ff69b4; /* Rosa */
+}
+
+input, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ff69b4; /* Rosa */
+    background-color: #fff; /* Branco */
+    color: #000; /* Preto para contraste */
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #ff69b4; /* Rosa */
+    color: #fff; /* Branco */
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ff1493; /* Rosa mais escuro */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff; /* Branco */
+}
+
+th, td {
+    border: 1px solid #ff69b4; /* Rosa */
+    padding: 8px;
+}
+
+th {
+    background-color: #ff69b4; /* Rosa */
+    color: #fff; /* Branco */
+}
+
+td {
+    color: #000; /* Preto para contraste */
+}
