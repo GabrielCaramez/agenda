@@ -3,38 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda Neuropisicopedagoga</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="Cognitivus_Karina.jpg">
+    <title>Agenda</title>
 </head>
 <body>
-    <h1>Agenda Neuropisicopedagoga</h1>
     <form id="appointmentForm">
-        <label for="name">Nome:</label>
-        <input type="text" id="name" name="name" required>
-        <label for="date">Data:</label>
-        <input type="date" id="date" name="date" required>
-        <label for="time">Hora:</label>
-        <input type="time" id="time" name="time" required>
-        <label for="notes">Observações:</label>
-        <textarea id="notes" name="notes"></textarea>
+        <label for="name">Nome</label>
+        <input type="text" id="name" placeholder="Nome" required>
+        
+        <label for="date">Data</label>
+        <input type="date" id="date" required>
+        
+        <label for="time">Hora</label>
+        <input type="time" id="time" required>
+        
+        <label for="notes">Notas</label>
+        <textarea id="notes" placeholder="Notas"></textarea>
+        
         <button type="submit">Agendar</button>
     </form>
-    <h2>Agendamentos</h2>
+
     <table id="appointmentsTable">
         <thead>
             <tr>
                 <th>Nome</th>
                 <th>Data</th>
                 <th>Hora</th>
-                <th>Observações</th>
+                <th>Notas</th>
                 <th>Ações</th>
             </tr>
         </thead>
         <tbody>
-            <!-- Agendamentos serão adicionados aqui -->
+            <!-- Linhas de compromissos serão adicionadas aqui -->
         </tbody>
     </table>
+
     <script src="script.js"></script>
 </body>
 </html>

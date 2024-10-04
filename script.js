@@ -6,6 +6,8 @@ document.getElementById('appointmentForm').addEventListener('submit', function(e
     const time = document.getElementById('time').value;
     const notes = document.getElementById('notes').value;
 
+    console.log('Form data:', { name, date, time, notes }); // Log dos dados do formulário
+
     const appointment = { name, date, time, notes };
     createAppointment(appointment);
 });
@@ -41,8 +43,14 @@ function createAppointment(appointment) {
         },
         body: JSON.stringify(appointment)
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erro na resposta da rede');
+        }
+        return response.json();
+    })
     .then(data => {
+        console.log('Resposta da API:', data); // Log da resposta da API
         addAppointmentToTable(data);
     })
     .catch(error => console.error('Erro:', error));

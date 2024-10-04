@@ -11,6 +11,7 @@ input, textarea {
     border: 1px solid #ff69b4; /* Rosa */
     background-color: #fff; /* Branco */
     color: #000; /* Preto para contraste */
+    box-sizing: border-box; /* Garantir que o padding não afete a largura total */
 }
 
 button {
@@ -20,6 +21,7 @@ button {
     color: #fff; /* Branco */
     border: none;
     cursor: pointer;
+    transition: background-color 0.3s ease; /* Suavizar a transição de cor */
 }
 
 button:hover {
@@ -29,12 +31,13 @@ button:hover {
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #fff; /* Branco */
+    margin-top: 20px; /* Adicionar margem superior para espaçamento */
 }
 
 th, td {
     border: 1px solid #ff69b4; /* Rosa */
     padding: 8px;
+    text-align: left;
 }
 
 th {
@@ -43,5 +46,6 @@ th {
 }
 
 td {
-    color: #000; /* Preto para contraste */
+    background-color: #fff; /* Branco */
+    color: #000; /* Preto */
 }
