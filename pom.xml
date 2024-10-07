@@ -41,6 +41,11 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+    <dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <scope>runtime</scope>
+    </dependency>
 
     <build>
         <plugins>

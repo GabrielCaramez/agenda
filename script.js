@@ -6,7 +6,7 @@ document.getElementById('appointmentForm').addEventListener('submit', function(e
     const time = document.getElementById('time').value;
     const notes = document.getElementById('notes').value;
 
-    console.log('Form data:', { name, date, time, notes }); // Log dos dados do formulário
+    console.log('Form data:', { name, date, time, notes });
 
     const appointment = { name, date, time, notes };
     createAppointment(appointment);
@@ -50,7 +50,7 @@ function createAppointment(appointment) {
         return response.json();
     })
     .then(data => {
-        console.log('Resposta da API:', data); // Log da resposta da API
+        console.log('Resposta da API:', data);
         addAppointmentToTable(data);
     })
     .catch(error => console.error('Erro:', error));
