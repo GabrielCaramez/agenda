@@ -6,6 +6,15 @@ conn = sqlite3.connect('agenda.db')
 # Criar um cursor
 cursor = conn.cursor()
 
+# Criar a tabela de usuários
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT NOT NULL UNIQUE,
+        password TEXT NOT NULL
+    )
+''')
+
 # Criar a tabela de compromissos
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS appointments (
@@ -13,14 +22,12 @@ cursor.execute('''
         name TEXT NOT NULL,
         date TEXT NOT NULL,
         time TEXT NOT NULL,
-        notes TEXT
+        notes TEXT,
+        user_id INTEGER,
+        FOREIGN KEY (user_id) REFERENCES users (id)
     )
 ''')
 
-# Confirmar as alterações
+# Confirmar as mudanças e fechar a conexão
 conn.commit()
-
-# Fechar a conexão
 conn.close()
-
-print("Banco de dados e tabela criados com sucesso.")

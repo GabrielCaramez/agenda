@@ -15,42 +15,119 @@ document.getElementById('appointmentForm').addEventListener('submit', function(e
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
-        loadAppointments();
-    });
+        if (data.message) {
+            alert(data.message);
+            if (data.message === 'Appointment created successfully') {
+                loadAppointments();
+            }
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    fetch('/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message);
+            if (data.message === 'Login successful') {
+                document.getElementById('appointmentForm').style.display = 'block';
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('createAccountForm').style.display = 'none';
+                loadAppointments();
+            }
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+document.getElementById('createAccountForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const newUsername = document.getElementById('newUsername').value;
+    const newPassword = document.getElementById('newPassword').value;
+
+    fetch('/create_account', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: newUsername, password: newPassword })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message);
+        }
+    })
+    .catch(error => console.error('Error:', error));
 });
 
 function loadAppointments() {
-    fetch('/appointments')
-        .then(response => response.json())
-        .then(data => {
-            const tbody = document.querySelector('#appointmentsTable tbody');
-            tbody.innerHTML = '';
-            data.forEach(appointment => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${appointment[1]}</td>
-                    <td>${appointment[2]}</td>
-                    <td>${appointment[3]}</td>
-                    <td>${appointment[4]}</td>
-                    <td>
-                        <button class="delete" onclick="deleteAppointment(${appointment[0]})">Delete</button>
-                    </td>
-                `;
-                tbody.appendChild(row);
+    fetch('/appointments', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(appointments => {
+        const tableBody = document.querySelector('#appointmentsTable tbody');
+        tableBody.innerHTML = ''; // Limpar a tabela antes de adicionar novos dados
+
+        appointments.forEach(appointment => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${appointment.name}</td>
+                <td>${appointment.date}</td>
+                <td>${appointment.time}</td>
+                <td>${appointment.notes}</td>
+                <td><button class="delete-btn" data-id="${appointment.id}">Excluir</button></td>
+            `;
+            tableBody.appendChild(row);
+        });
+
+        // Adicionar evento de clique para os botões de exclusão
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const appointmentId = this.getAttribute('data-id');
+                deleteAppointment(appointmentId);
             });
         });
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 function deleteAppointment(id) {
     fetch(`/appointments/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
-        loadAppointments();
-    });
+        if (data.message) {
+            alert(data.message);
+            loadAppointments(); // Recarregar a lista de compromissos
+        }
+    })
+    .catch(error => console.error('Error:', error));
 }
 
-document.addEventListener('DOMContentLoaded', loadAppointments);
+// Carregar compromissos ao carregar a página
+document.addEventListener('DOMContentLoaded', function() {
+    loadAppointments();
+});

@@ -8,7 +8,32 @@
     <title>Agenda</title>
 </head>
 <body>
-    <form id="appointmentForm">
+    <!-- Formulário de Criação de Conta -->
+    <form id="createAccountForm">
+        <h2>Criar Conta</h2>
+        <label for="newUsername">Nome de Usuário</label>
+        <input type="text" id="newUsername" placeholder="Nome de Usuário" required>
+        
+        <label for="newPassword">Senha</label>
+        <input type="password" id="newPassword" placeholder="Senha" required>
+        
+        <button type="submit">Criar Conta</button>
+    </form>
+
+    <!-- Formulário de Login -->
+    <form id="loginForm">
+        <h2>Login</h2>
+        <label for="username">Nome de Usuário</label>
+        <input type="text" id="username" placeholder="Nome de Usuário" required>
+        
+        <label for="password">Senha</label>
+        <input type="password" id="password" placeholder="Senha" required>
+        
+        <button type="submit">Login</button>
+    </form>
+
+    <!-- Formulário de Agendamento -->
+    <form id="appointmentForm" style="display: none;">
         <label for="name">Nome</label>
         <input type="text" id="name" placeholder="Nome" required>
         
@@ -35,7 +60,7 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Linhas de compromissos serão adicionadas aqui -->
+            <!-- Linhas de agendamentos serão inseridas aqui -->
         </tbody>
     </table>
 
