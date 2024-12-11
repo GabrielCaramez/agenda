@@ -77,6 +77,11 @@ def login():
     else:
         return jsonify({'message': 'Invalid username or password'}), 401
 
+@app.route('/logout', methods=['POST'])
+def logout():
+    session.pop('user_id', None)
+    return jsonify({'message': 'Logout successful'}), 200
+
 @app.route('/appointments', methods=['POST'])
 def create_appointment():
     if 'user_id' not in session:

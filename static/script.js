@@ -46,6 +46,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
                 document.getElementById('appointmentForm').style.display = 'block';
                 document.getElementById('loginForm').style.display = 'none';
                 document.getElementById('createAccountForm').style.display = 'none';
+                document.getElementById('logoutButton').style.display = 'block';
                 loadAppointments();
             }
         }
@@ -70,6 +71,26 @@ document.getElementById('createAccountForm').addEventListener('submit', function
     .then(data => {
         if (data.message) {
             alert(data.message);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+document.getElementById('logoutButton').addEventListener('click', function() {
+    fetch('/logout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message);
+            document.getElementById('appointmentForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('createAccountForm').style.display = 'block';
+            document.getElementById('logoutButton').style.display = 'none';
         }
     })
     .catch(error => console.error('Error:', error));
